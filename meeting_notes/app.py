@@ -1544,5 +1544,17 @@ class MeetingNotesApp(App):
 
 def run(dev_mode: bool = False):
     """Run the application."""
+    # Pre-initialize tqdm's multiprocessing lock before Textual starts.
+    # Textual redirects stderr to an internal buffer, leaving the original
+    # FD closed. Python 3.14 validates all FDs passed to fork_exec, so
+    # resource_tracker._launch() (triggered lazily by tqdm's RLock creation)
+    # would fail with "bad value(s) in fds_to_keep". Initializing the lock
+    # here, while stderr is still a valid terminal FD, avoids this entirely.
+    try:
+        import tqdm
+        tqdm.tqdm.get_lock()
+    except Exception:
+        pass
+
     app = MeetingNotesApp(dev_mode=dev_mode)
     app.run()
