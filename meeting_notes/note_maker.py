@@ -94,7 +94,7 @@ class NoteMaker:
             else:
                 try:
                     from .summarizer import OllamaSummarizer  # type: ignore
-                    self.summarizer = OllamaSummarizer(model=ai_model)
+                    self.summarizer = OllamaSummarizer(model=ai_model or "llama3.2:3b")
                     logger.info(f"AI summarization enabled (Local Ollama: {ai_model})")
                     print(f"AI summarization enabled (Local Ollama: {ai_model})")
                 except Exception as e:

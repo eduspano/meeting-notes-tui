@@ -625,7 +625,7 @@ class SettingsScreen(Screen):
                 elif event.button.provider_id == "openrouter":
                     self.config["ai_model"] = "balanced"
                 elif event.button.provider_id == "local":
-                    self.config["ai_model"] = self.config.get("ollama_model", "llama3.2:3b")
+                    self.config["ai_model"] = self.config.get("ollama_model") or "llama3.2:3b"
                 self.refresh_content()
         
         # AI model selection (for cloud providers)
