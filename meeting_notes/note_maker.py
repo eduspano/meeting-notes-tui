@@ -47,10 +47,10 @@ class NoteMaker:
             api_key: API key for cloud provider (or use env var)
         """
         logger.info(f"Initializing NoteMaker (output_dir: {output_dir}, transcripts_dir: {transcripts_dir}, ai_provider: {ai_provider}, ai_model: {ai_model})")
-        self.output_dir = Path(output_dir)
-        self.transcripts_dir = Path(transcripts_dir)
-        self.output_dir.mkdir(exist_ok=True)
-        self.transcripts_dir.mkdir(exist_ok=True)
+        self.output_dir = Path(output_dir).expanduser()
+        self.transcripts_dir = Path(transcripts_dir).expanduser()
+        self.output_dir.mkdir(parents=True, exist_ok=True)
+        self.transcripts_dir.mkdir(parents=True, exist_ok=True)
         self.ai_provider = ai_provider
         self.summarizer: Optional[Any] = None
         
